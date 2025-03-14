@@ -1,9 +1,8 @@
 <?php
 
-namespace App\User\Controllers;
+namespace App\Controllers\User;
 
 use App\Models\User;
-use App\Models\Usuario;
 use Core\Database;
 use Core\Validation;
 
@@ -11,22 +10,22 @@ class LoginController
 {
   public function index()
   {
-    return view('login', template: 'guest');
+    return view('users/login', template: 'guest');
   }
 
   public function Login()
   {
     $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $password = $_POST['password'];
 
     $validacao = Validation::validate([
       'email' => ['required', 'email'],
-      'senha' => ['required'],
+      'password' => ['required'],
     ], $_POST);
 
-    if ($validacao->notPass()) {
-      return view('login', template: 'guest');
-    }
+    // if ($validacao->notPass()) {
+    // return view('users/login', template: 'guest');
+    // }
 
     $database = new Database(config('database'));
 
@@ -36,16 +35,16 @@ class LoginController
       params: compact('email')
     )->fetch();
 
-    if (!($users && password_verify($senha, $users->senha))) {
-      flash()->push('validations', ['email' => ['Usuário ou senha estão incorretos!']]);
+    if (!($users && password_verify($password, $users->password))) {
+      flash()->push('validations', ['email' => ['Usuário ou password estão incorretos!']]);
 
       return view('login', template: 'guest');
     }
 
     $_SESSION['auth'] = $users;
 
-    flash()->push('mensage', 'Seja bem vindo ' . $users->nome . '!');
+    flash()->push('mensage', 'Seja bem vindo ' . $users->name . '!');
 
-    redirect('/notas');
+    redirect('equipments/index');
   }
 }

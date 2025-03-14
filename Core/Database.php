@@ -11,8 +11,11 @@ class Database
 
   public function __construct(array $config)
   {
-    $connectionString = $config['driver'] . ':' . $config['database'];
-    $this->db = new PDO($connectionString);
+    $connectionString = "{$config['driver']}:host={$config['host']};dbname={$config['dbname']};charset=utf8mb4";
+    $this->db = new PDO($connectionString, $config['dbuser'], $config['dbpass'], [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
   }
 
   public function query(string $query, mixed $class = null, array $params = []): false|PDOStatement
@@ -22,7 +25,6 @@ class Database
     if ($class) {
       $prepare->setFetchMode(PDO::FETCH_CLASS, $class);
     }
-
 
     $prepare->execute($params);
 

@@ -6,7 +6,7 @@ use Core\Database;
 
 class Equipment
 {
-  public $id;
+  public $equipment_id;
   public $name;
   public $serial_number;
   public $type;
@@ -16,14 +16,9 @@ class Equipment
   {
     $database = new Database(config('database'));
     return $database->query(
-      'SELECT * FROM equipments WHERE equipment_id = :equipment_id' . (
-        $search ? ' AND titulo LIKE :pesquisar' : null
-      ),
+      'SELECT * FROM equipments' . ($search ? ' WHERE name LIKE :search' : ''),
       self::class,
-      params: array_merge(
-        ['user_id' => auth()->id],
-        $search ? ['search' => "%$search%"] : []
-      )
+      params: $search ? ['search' => "%$search%"] : []
     )->fetchAll();
   }
 
@@ -32,7 +27,7 @@ class Equipment
     $database = new Database(config('database'));
 
     $database->query(
-      'DELETE FROM equipments WHERE id = :id',
+      'DELETE FROM equipments WHERE equipment_id = :id',
       params: [
         'id' => $id
       ]
@@ -50,9 +45,9 @@ class Equipment
     }
 
     $database->query(
-      "UPDATE notas SET $set WHERE id = :id",
+      "UPDATE equipments SET $set WHERE equipment_id = :id",
       params: array_merge([
-        'id' => $id,
+        'equipment_id' => $id,
         'name' => $name,
         'serial_number' => $serial_number,
         'registration_date' => date('Y-m-d H:i:s'),
@@ -66,11 +61,10 @@ class Equipment
     $database = new Database(config('database'));
 
     $database->query(
-      'INSERT INTO equipments (usuario_id, titulo, nota, data_criacao, data_atualizacao) 
-                  VALUES (:usuario_id, :titulo, :nota, :data_criacao, :data_atualizacao)',
+      'INSERT INTO equipments (name, serial_number, type, registration_date) 
+                  VALUES (:usuario_id, :name, :serial_number, :type, :registration_date)',
       params: array_merge($data, [
-        'data_criacao' => date('Y-m-d H:i:s'),
-        'data_atualizacao' => date('Y-m-d H:i:s')
+        'registration_date' => date('Y-m-d H:i:s')
       ])
     );
 

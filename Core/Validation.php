@@ -16,15 +16,15 @@ class Validation
       foreach ($fieldRules as $rule) {
         $fieldValue = $dados[$field] ?? '';
 
-        if ($regra == 'confirmed') {
-          $validaton->$regra($field, $fieldValue, $data["{$field}_confirmation"] ?? '');
-        } elseif (str_contains($regra, ':')) {
-          $temp = explode(':', $regra);
+        if ($rule == 'confirmed') {
+          $validaton->$rule($field, $fieldValue, $data["{$field}_confirmation"] ?? '');
+        } elseif (str_contains($rule, ':')) {
+          $temp = explode(':', $rule);
           $tempRule = $temp[0];
           $argTemp = $temp[1];
           $validaton->$tempRule($argTemp, $field, $fieldValue);
         } else {
-          $validaton->$regra($field, $fieldValue);
+          $validaton->$rule($field, $fieldValue);
         }
       }
     }
@@ -103,13 +103,13 @@ class Validation
 
     $db = new Database(config('database'));
 
-    $resultado = $db->query(
-      "SELECT * FROM $tabela WHERE $field = :valor",
+    $result = $db->query(
+      "SELECT * FROM $tabela WHERE $field = :value",
       User::class,
-      params: ['valor' => $fieldValue]
+      params: ['value' => $fieldValue]
     )->fetch();
 
-    if ($resultado) {
+    if ($result) {
       $this->addError($field, "O $field já está sendo usado.");
     }
   }
@@ -121,7 +121,7 @@ class Validation
 
   public function notPass(?string $nameCustom = null): bool
   {
-    $key = $nameCustom ? "validacoes_" . $nameCustom : 'validacoes';
+    $key = $nameCustom ? "validations_" . $nameCustom : 'validations';
 
     flash()->push($key, $this->validations);
 

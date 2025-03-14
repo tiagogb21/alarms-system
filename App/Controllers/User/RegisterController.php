@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User\Controllers;
+namespace App\Controllers\User;
 
 use Core\Database;
 use Core\Validation;
@@ -9,10 +9,10 @@ class RegisterController
 {
   public function index()
   {
-    return view('registrar', template: 'guest');
+    return view('users/register', template: 'guest');
   }
 
-  public function Register()
+  public function register()
   {
     $validation = Validation::validate([
       'name' => ['required'],
@@ -20,9 +20,9 @@ class RegisterController
       'password' => ['required', 'min:8', 'max:30', 'strong'],
     ], $_POST);
 
-    if ($validation->notPass()) {
-      return view('registrar', template: 'guest');
-    }
+    // if ($validation->notPass()) {
+    // return view('users/register', template: 'guest');
+    // }
 
     $database = new Database(config('database'));
 

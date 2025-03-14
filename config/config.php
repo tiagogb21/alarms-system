@@ -3,7 +3,10 @@
 return [
   'database' => [
     'driver' => 'mysql',
-    'database' => base_path('database/alarms.mysql')
+    'host' => 'localhost',
+    'dbname' => 'alarms',
+    'dbuser' => 'docker',
+    'dbpass' => 'docker',
   ],
   'security' => [
     'first_key' => env('ENCRYPT_FIRST_KEY', 'first_key'),

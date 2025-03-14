@@ -2,17 +2,19 @@
 
 namespace Core;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Route
 {
-  public $routes = [];
+  public array $routes = [];
 
-  public function addRoute($httpMethod, $uri, $controller, mixed $middleware = null)
+  public function addRoute(string $httpMethod, string $uri, string|array|null $controller = null, ?string $middleware = null): void
   {
     if (is_string($controller)) {
       $data = [
         'class' => $controller,
         'method' => '__invoke',
-        'middleware' => $middleware,
+        'middleware' => $middleware
       ];
     }
 
@@ -20,44 +22,41 @@ class Route
       $data = [
         'class' => $controller[0],
         'method' => $controller[1],
-        'middleware' => $middleware,
+        'middleware' => $middleware
       ];
     }
 
-    $this->routes[$httpMethod][$uri] = $data;
+    $this->routes[$httpMethod][$uri] = $data ?? [];
   }
 
-  public function get($uri, $controller, mixed $middleware = null)
+  public function get(string $uri, string|array|null $controller = null, ?string $middleware = null): static
   {
     $this->addRoute('GET', $uri, $controller, $middleware);
-
     return $this;
   }
 
-  public function post($uri, $controller, mixed $middleware = null)
+  public function post(string $uri, string|array|null $controller = null, ?string $middleware = null): static
   {
     $this->addRoute('POST', $uri, $controller, $middleware);
-
     return $this;
   }
 
-  public function put($uri, $controller, mixed $middleware = null)
+  public function put(string $uri, string|array|null $controller = null, ?string $middleware = null): static
   {
     $this->addRoute('PUT', $uri, $controller, $middleware);
-
     return $this;
   }
 
-  public function delete($uri, $controller, mixed $middleware = null)
+  public function delete(string $uri, string|array|null $controller = null, ?string $middleware = null): static
   {
     $this->addRoute('DELETE', $uri, $controller, $middleware);
-
     return $this;
   }
 
-  public function run()
+  #[NoReturn] public function run(): void
   {
-    $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+    $uri = '/' . str_replace(getBaseURL(), '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
     $httpMethod = request()->post('__method', $_SERVER['REQUEST_METHOD']);
 
     if (!isset($this->routes[$httpMethod][$uri])) {
@@ -71,11 +70,13 @@ class Route
     $middleware = $routeInfo['middleware'];
 
     if ($middleware) {
-      $m = new $middleware;
-      $m->handle();
+      $middleware = new $middleware();
+      $middleware->handle();
     }
 
-    $c = new $class;
+    $c = new $class();
     $c->$method();
+
+    exit;
   }
 }

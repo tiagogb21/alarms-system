@@ -8,11 +8,10 @@ class IndexController
 {
   public function __invoke()
   {
-    var_dump(__LINE__);
     $equipments = Equipment::all(request()->get('search'));
 
     if (!$selectedEquipment = $this->getSelectedEquipment($equipments)) {
-      return view('equipments/not-found');
+      return view('404');
     }
 
     return view('equipments/index', compact('equipments', 'selectedEquipment'));

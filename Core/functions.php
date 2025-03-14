@@ -12,6 +12,7 @@ function view($view, $data = [], $template = 'app')
   foreach ($data as $key => $value) {
     $$key = $value;
   }
+
   require base_path("views/template/$template.php");
 }
 
@@ -27,6 +28,11 @@ function abort($code)
 function flash()
 {
   return new Flash;
+}
+
+function getBaseURL(): string
+{
+  return '/';
 }
 
 function config(?string $chave = null)

@@ -3,11 +3,11 @@
 use App\Controllers\IndexController;
 
 use App\Controllers\Equipments;
+use App\Controllers\User\LoginController;
+use App\Controllers\User\LogoutController;
+use App\Controllers\User\RegisterController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
-use App\User\Controllers\LoginController;
-use App\User\Controllers\LogoutController;
-use App\User\Controllers\RegisterController;
 use Core\Route;
 
 (new Route)
@@ -15,8 +15,8 @@ use Core\Route;
   ->get('/', IndexController::class, GuestMiddleware::class)
   ->get('/login', [LoginController::class, 'index'], GuestMiddleware::class)
   ->post('/login', [LoginController::class, 'login'], GuestMiddleware::class)
-  ->get('/registrar', [RegisterController::class, 'index'], GuestMiddleware::class)
-  ->post('/registrar', [RegisterController::class, 'register'], GuestMiddleware::class)
+  ->get('/register', [RegisterController::class, 'index'], GuestMiddleware::class)
+  ->post('/register', [RegisterController::class, 'register'], GuestMiddleware::class)
 
   // Autenticado
   ->get('/logout', LogoutController::class, AuthMiddleware::class)

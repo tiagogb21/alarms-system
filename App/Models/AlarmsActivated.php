@@ -4,7 +4,7 @@ namespace App\Models;
 
 class AlarmsActivated
 {
-  public $id;
+  public $alarms_activated_id;
   public $alarm_id;
   public $input_date;
   public $departure_date;
