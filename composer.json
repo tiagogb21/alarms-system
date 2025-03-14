@@ -1,0 +1,21 @@
+{
+    "name": "tiagogb/alarms",
+    "description": "project for a test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "App\\": "App/"
+        },
+        "files": [
+            "./Core/functions.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "tiagogb",
+            "email": "tgbmateriais@gmail.com"
+        }
+    ],
+    "require": {}
+}

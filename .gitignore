@@ -1,0 +1,10 @@
+/identifier.sqlite
+/.idea/.gitignore
+/.idea/material_theme_project_new.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
+/.env
+
+/vendor/
