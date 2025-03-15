@@ -8,3 +8,6 @@
 /.env
 
 /vendor/
+
+/README.md/
+/.vs
