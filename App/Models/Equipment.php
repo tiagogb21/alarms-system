@@ -34,7 +34,7 @@ class Equipment
     );
   }
 
-  public static function update(int $id, string $name, int $serial_number, string $type): void
+  public static function update(string $name, int $serial_number, string $type): void
   {
     $database = new Database(config('database'));
 
@@ -45,9 +45,8 @@ class Equipment
     }
 
     $database->query(
-      "UPDATE equipments SET $set WHERE equipment_id = :id",
+      "UPDATE equipments SET $set WHERE equipment_id = :equipment_id",
       params: array_merge([
-        'equipment_id' => $id,
         'name' => $name,
         'serial_number' => $serial_number,
         'registration_date' => date('Y-m-d H:i:s'),

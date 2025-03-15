@@ -27,7 +27,5 @@ use App\Controllers\Equipments;
   ->delete('/equipments', Equipments\DeleteController::class, AuthMiddleware::class)
 
   ->get('/confirmar', [Equipments\ViewController::class, 'confirm'], AuthMiddleware::class)
-  ->post('/mostrar', [Equipments\ViewController::class, 'show'], AuthMiddleware::class)
-  ->get('/esconder', [Equipments\ViewController::class, 'hide'], AuthMiddleware::class)
 
   ->run();

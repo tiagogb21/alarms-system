@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-md-3">
-      <h2 class="mb-3">Equipamentos</h2>
+      <h2 class="fs-3 fw-bold mb-3">Equipamentos</h2>
       <ul class="list-group">
         <?php if (!empty($equipments)): ?>
           <?php foreach ($equipments as $equipment): ?>
@@ -12,7 +12,7 @@
             </li>
           <?php endforeach; ?>
         <?php else: ?>
-          <li class="list-group-item text-muted">Nenhum equipamento cadastrado.</li>
+          <li class="list-group-item text-muted">Nenhum equipamento pode ser encontrado.</li>
         <?php endif; ?>
       </ul>
     </div>
@@ -27,8 +27,47 @@
           <p><strong>Data de Registro:</strong> <?= htmlspecialchars($selectedEquipment->registration_date) ?></p>
 
           <div class="d-flex justify-content-end align-items-center gap-3">
-            <button class="btn btn-primary" type="submit" form="form-atualizacao">Atualizar</button>
-            <form action="/equipments" method="post">
+            <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Editar Equipamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/equipments" method="post" id="form-update">
+                      <input type="hidden" name="__method" value="PUT" />
+                      <input type="hidden" name="id" value="<?= $selectedEquipment->equipment_id ?>" />
+
+                      <div class="mb-3">
+                        <label for="equipment-name" class="form-label">Nome</label>
+                        <input type="text" id="equipment-name" name="name" value="<?= $selectedEquipment->name ?>"
+                          class="form-control" />
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="equipment-type" class="form-label">Tipo do Equipamento</label>
+                        <select name="type" id="equipment-type" class="form-select" required>
+                          <option value="Tensão">Tensão</option>
+                          <option value="Corrente">Corrente</option>
+                          <option value="Óleo">Óleo</option>
+                        </select>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+              Atualizar
+            </button>
+            <form action="/equipments" method="POST">
               <input type="hidden" name="__method" value="DELETE" />
               <input type="hidden" name="equipment_id" value="<?= $selectedEquipment->equipment_id ?>" />
               <button type="submit" class="btn btn-danger">Excluir</button>

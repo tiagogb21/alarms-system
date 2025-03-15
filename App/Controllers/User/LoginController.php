@@ -45,6 +45,6 @@ class LoginController
 
     flash()->push('mensage', 'Seja bem vindo ' . $users->name . '!');
 
-    redirect('equipments/index');
+    redirect('equipments');
   }
 }
