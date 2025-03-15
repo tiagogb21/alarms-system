@@ -9,6 +9,7 @@ use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
 use Core\Route;
 use App\Controllers\Equipments;
+use App\Controllers\Alarms;
 
 (new Route)
   // Não autenticado
@@ -19,6 +20,8 @@ use App\Controllers\Equipments;
   ->post('/register', [RegisterController::class, 'register'], GuestMiddleware::class)
 
   // Autenticado
+
+  // Equipamentos
   ->get('/logout', LogoutController::class, AuthMiddleware::class)
   ->get('/equipments', Equipments\IndexController::class, AuthMiddleware::class)
   ->get('/equipments/create', [Equipments\CreateController::class, 'index'], AuthMiddleware::class)
@@ -27,5 +30,9 @@ use App\Controllers\Equipments;
   ->delete('/equipments', Equipments\DeleteController::class, AuthMiddleware::class)
 
   ->get('/confirmar', [Equipments\ViewController::class, 'confirm'], AuthMiddleware::class)
+
+  // Alarmes
+  ->get('/alarms/create', [Alarms\CreateController::class, 'index'], AuthMiddleware::class)
+  ->post('/alarms/create', [Alarms\CreateController::class, 'store'], AuthMiddleware::class)
 
   ->run();

@@ -7,6 +7,7 @@
     <title>Alarm System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="../styles/reset.css" rel="stylesheet">
     <link href="../styles/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,9 +17,8 @@
 </head>
 
 <body>
-    <section class="container d-flex flex-column gap-3 vh-100">
-        <?php require base_path('views/partials/_navbar.view.php'); ?>
-
+    <?php require base_path('views/partials/_navbar.view.php'); ?>
+    <section class="container d-flex flex-column gap-3 min-vh-100">
         <?php require base_path('views/partials/_search.view.php'); ?>
 
         <?php require base_path('views/partials/_message.view.php'); ?>

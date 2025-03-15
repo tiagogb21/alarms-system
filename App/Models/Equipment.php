@@ -34,25 +34,21 @@ class Equipment
     );
   }
 
-  public static function update(string $name, int $serial_number, string $type): void
+  public static function update(int $equipment_id, string $name, string $serial_number, string $type): void
   {
     $database = new Database(config('database'));
 
     $set = 'name = :name, serial_number = :serial_number, type = :type';
 
-    if (session()->get('active')) {
-      $set .= ', active = true';
-    }
-
     $database->query(
       "UPDATE equipments SET $set WHERE equipment_id = :equipment_id",
       params: array_merge([
+        'equipment_id' => $equipment_id,
         'name' => $name,
         'serial_number' => $serial_number,
-        'registration_date' => date('Y-m-d H:i:s'),
+        'type' => $type,
       ], session()->get('active') ? ['active' => encrypt($name)] : [])
     );
-
   }
 
   public static function create(array $data): void

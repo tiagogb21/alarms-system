@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Alarm;
+
 $id = $_REQUEST['id'];
 
 function alarms($db, ?int $id = null)
@@ -9,7 +11,7 @@ function alarms($db, ?int $id = null)
   $store = [];
 
   foreach ($items as $item) {
-    $alarm = new Alarms;
+    $alarm = new Alarm;
     $alarm->id = $item['id'];
     $alarm->description = $item['description'];
     $alarm->equipment_id = $item['equipment_id'];

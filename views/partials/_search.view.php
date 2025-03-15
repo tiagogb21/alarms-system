@@ -6,5 +6,5 @@
       <i class="fas fa-search"></i>
     </div>
   </form>
-  <a href="<?= getBaseURL() ?>equipments/create" class="btn btn-primary">+ adicionar</a>
+  <a href="<?= getBaseURL() ?>equipments/create" class="btn btn-primary">adicionar</a>
 </div>

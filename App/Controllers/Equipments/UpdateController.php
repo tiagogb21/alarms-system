@@ -25,6 +25,7 @@ class UpdateController
     // }
 
     Equipment::update(
+      request()->post('equipment_id'),
       request()->post('name'),
       request()->post('serial_number'),
       request()->post('type'),

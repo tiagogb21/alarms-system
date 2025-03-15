@@ -24,7 +24,9 @@
           <h4 class="fs-4 fw-bold"><?= htmlspecialchars($selectedEquipment->name) ?></h4>
           <p><strong>Número de Série:</strong> <?= htmlspecialchars($selectedEquipment->serial_number) ?></p>
           <p><strong>Tipo:</strong> <?= htmlspecialchars($selectedEquipment->type) ?></p>
-          <p><strong>Data de Registro:</strong> <?= htmlspecialchars($selectedEquipment->registration_date) ?></p>
+          <p><strong>Data de Registro:</strong>
+            <?= htmlspecialchars(DateTime::createFromFormat('Y-m-d H:i:s', $selectedEquipment->registration_date)->format('d/m/Y')) ?>
+          </p>
 
           <div class="d-flex justify-content-end align-items-center gap-3">
             <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -37,12 +39,18 @@
                   <div class="modal-body">
                     <form action="/equipments" method="post" id="form-update">
                       <input type="hidden" name="__method" value="PUT" />
-                      <input type="hidden" name="id" value="<?= $selectedEquipment->equipment_id ?>" />
+                      <input type="hidden" name="equipment_id" value="<?= $selectedEquipment->equipment_id ?>" />
 
                       <div class="mb-3">
                         <label for="equipment-name" class="form-label">Nome</label>
                         <input type="text" id="equipment-name" name="name" value="<?= $selectedEquipment->name ?>"
                           class="form-control" />
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="equipment-serial-number" class="form-label">Número de Série</label>
+                        <input type="text" id="equipment-serial-number" name="serial_number"
+                          value="<?= $selectedEquipment->serial_number ?>" class="form-control" />
                       </div>
 
                       <div class="mb-3">
