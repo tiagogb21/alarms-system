@@ -10,8 +10,14 @@ class IndexController
   {
     $equipments = Equipment::all(request()->get('search'));
 
-    if (!$selectedEquipment = $this->getSelectedEquipment($equipments)) {
-      return view('404');
+    if (sizeof($equipments) > 0) {
+      $selectedEquipment = $this->getSelectedEquipment($equipments);
+
+      if (!$selectedEquipment) {
+        return view('404');
+      }
+    } else {
+      $selectedEquipment = null;
     }
 
     return view('equipments/index', compact('equipments', 'selectedEquipment'));
@@ -19,9 +25,10 @@ class IndexController
 
   private function getSelectedEquipment(array $equipments)
   {
-    $id = request()->get('id', (sizeof($equipments) > 0 ? $equipments[0]->id : null));
+    $id = request()->get('equipment_id', (sizeof($equipments) > 0 ? $equipments[0]->equipment_id : null));
 
-    $filtro = array_filter($equipments, fn($n) => $n->id == $id);
-    return array_pop($filtro);
+    $filter = array_filter($equipments, fn($n) => $n->equipment_id == $id);
+
+    return array_pop($filter);
   }
 }

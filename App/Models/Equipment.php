@@ -62,7 +62,7 @@ class Equipment
 
     $database->query(
       'INSERT INTO equipments (name, serial_number, type, registration_date) 
-                  VALUES (:usuario_id, :name, :serial_number, :type, :registration_date)',
+                  VALUES (:name, :serial_number, :type, :registration_date)',
       params: array_merge($data, [
         'registration_date' => date('Y-m-d H:i:s')
       ])
