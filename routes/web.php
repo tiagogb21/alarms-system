@@ -13,7 +13,7 @@ use App\Controllers\Alarms;
 
 (new Route)
   // Não autenticado
-  ->get('/', IndexController::class, GuestMiddleware::class)
+  ->get('/', Equipments\IndexController::class, AuthMiddleware::class)
   ->get('/login', [LoginController::class, 'index'], GuestMiddleware::class)
   ->post('/login', [LoginController::class, 'login'], GuestMiddleware::class)
   ->get('/register', [RegisterController::class, 'index'], GuestMiddleware::class)

@@ -2,9 +2,9 @@
   <?php
   $validations = flash()->get('validations');
   ?>
-  <h1 class="text-center">Login</h1>
+  <h1 class="fs-2 fw-bold text-center">Login</h1>
   <div class="form-group">
-    <label for="email">Email:</label>
+    <label for="email" class="mb-2">Email:</label>
     <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp"
       placeholder="Enter email">
   </div>
@@ -12,7 +12,7 @@
     <div class="label text-xs text-danger"><?= $validations['email'][0] ?></div>
   <?php } ?>
   <div class="form-group">
-    <label for="password">Password:</label>
+    <label for="password" class="mb-2">Password:</label>
     <input type="password" name="password" class="form-control" id="password" placeholder="Password">
   </div>
   <?php if (isset($validations['password'])) { ?>

@@ -22,11 +22,44 @@
         <h2 class="fs-3 mb-3 fw-bold">Detalhes do Equipamento</h2>
         <div class="card p-3 d-flex flex-column gap-3">
           <h4 class="fs-4 fw-bold"><?= htmlspecialchars($selectedEquipment->name) ?></h4>
+          <div class="d-flex justify-content-end">
+            <a href="<?= getBaseURL() ?>alarms/create?equipment_id=<?= $selectedEquipment->equipment_id ?>"
+              class="btn btn-success">Adicionar Alarme</a>
+          </div>
           <p><strong>Número de Série:</strong> <?= htmlspecialchars($selectedEquipment->serial_number) ?></p>
           <p><strong>Tipo:</strong> <?= htmlspecialchars($selectedEquipment->type) ?></p>
           <p><strong>Data de Registro:</strong>
             <?= htmlspecialchars(DateTime::createFromFormat('Y-m-d H:i:s', $selectedEquipment->registration_date)->format('d/m/Y')) ?>
           </p>
+
+          <ul class="d-flex gap-3 flex-wrap">
+            <?php foreach ($alarms as $alarm): ?>
+              <?php
+              $colorClass = match ($alarm->classification) {
+                'urgente' => 'text-danger',
+                'emergente' => 'text-warning',
+                'ordinario' => 'text-primary',
+                default => 'text-secondary'
+              };
+              ?>
+              <li
+                class="col-8 col-md-4 d-flex flex-column align-items-center gap-2 border border-1 border-secondary pb-3 rounded">
+                <div class="w-100 d-flex justify-content-between align-items-center gap-3">
+                  <button type="button" class="btn text-primary" data-bs-toggle="tooltip" title="Atualizar">
+                    <i class="bi bi-arrow-clockwise"></i>
+                  </button>
+                  <button type="button" class="btn text-danger" data-bs-toggle="tooltip" title="Excluir">
+                    <i class="bi bi-x fs-3"></i>
+                  </button>
+                </div>
+                <i class="bi bi-lightbulb-fill fs-3 <?= $colorClass ?>"></i>
+                <div class="d-flex gap-1">
+                  <button type="button" class="btn btn-primary border border-1 border-secondary rounded p-2">on</button>
+                  <button type="button" class="btn btn-danger border border-1 border-secondary rounded p-2">off</button>
+                </div>
+              </li>
+            <?php endforeach; ?>
+          </ul>
 
           <div class="d-flex justify-content-end align-items-center gap-3">
             <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">

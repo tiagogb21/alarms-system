@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Equipments;
 
+use App\Models\Alarm;
 use App\Models\Equipment;
 
 class IndexController
@@ -20,7 +21,9 @@ class IndexController
       $selectedEquipment = null;
     }
 
-    return view('equipments/index', compact('equipments', 'selectedEquipment'));
+    $alarms = Alarm::all($selectedEquipment->equipment_id);
+
+    return view('equipments/index', compact('equipments', ['selectedEquipment', 'alarms']));
   }
 
   private function getSelectedEquipment(array $equipments)

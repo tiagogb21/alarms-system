@@ -6,12 +6,15 @@
     <div class="flex-none">
       <ul class="menu menu-horizontal px-1">
         <li>
-          <details>
-            <summary><?= auth()?->name ?></summary>
-            <ul class="bg-base-100 rounded-t-none p-2">
-              <li><a href="/logout">Sair</a></li>
-            </ul>
-          </details>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <?= auth()?->name ?>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/logout">Sair</a>
+            </div>
+          </div>
         </li>
       </ul>
     </div>

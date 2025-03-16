@@ -12,7 +12,7 @@ CREATE TABLE equipments (
 CREATE TABLE alarms (
     alarm_id INT AUTO_INCREMENT PRIMARY KEY,
     description TEXT NOT NULL,
-    classification ENUM('Urgente', 'Emergente', 'Ordinário') NOT NULL,
+    classification ENUM('urgente', 'emergente', 'ordinario') NOT NULL,
     equipment_id INT NOT NULL,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (equipment_id) REFERENCES equipments(equipment_id) ON DELETE CASCADE
